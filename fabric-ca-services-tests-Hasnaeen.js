@@ -189,17 +189,16 @@ test('FabricCAServices: Test enroll() With Dynamic CSR', function (t) {
 			t.pass('Successfully constructed User object for "webAdmin"');
 
 			return caService.register({enrollmentID: 'auditor', role: 'auditor'}, webAdmin);
-		}).then(() => {
-			t.pass('Successfully registered "auditor" of role "client" from "webAdmin"');
-			t.end();
-		},(err) => {
-			t.pass('Successfully rejected attempt to register a user of invalid role. ' + err);
+		}).then(() => {			
+			t.pass('Successfully registered "auditor" of role "auditor" from "webAdmin"');
 
 			return caService.register({enrollmentID: 'auditor', role: 'client', affiliation: 'org2.department1'}, webAdmin);
 		}).then(() => {
 			t.fail('Should not have been able to use "webAdmin" to register a user of the "auditor" role');
+			t.end();
+		},(err) => {
+			t.pass('Successfully rejected attempt to register a user of invalid role. ' + err);
 			
-
 			return caService.reenroll(webAdmin);
 		}).then((res) => {
 			t.pass('Successfully re-enrolled "webAdmin" user');
